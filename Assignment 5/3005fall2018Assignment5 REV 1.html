@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>COMP3005</title>
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;	
+	margin-left:80px;
+	margin-right:80px;
+}
+h1, h2, h3 {
+	font-weight: bold;
+	color: blue;
+}
+p {
+	font-size: large;
+}
+
+.red {
+	color: #F00;
+}
+.green {
+	color: forestgreen;
+}
+  .bold {
+	font-weight: bold;
+}
+.requirement {
+	font-weight: bold;
+	background-color: #6AF37A;
+}
+.requirement_danger {
+	font-weight: bold;
+	background-color: #F47272
+}
+.requirement_warning {
+	font-weight: bold;
+	background-color: #F6CA54
+}
+  .code {
+	font-family: "Courier New", Courier, monospace;
+}
+  .requirement_warning1 {	font-weight: bold;
+	background-color: #F7BD36
+}
+</style>
+</head>
+<body class="arial">
+<h1>COMP 3005 Fall 2018 Assignment 5</h1>
+<h1><span class="red">Due: Fri. Nov. 30 by 10:00pm (submitted to</span> <a href="http://www.carleton.ca/culearn">culearn</a><span class="red">)</span> </h1>
+<p class="red">
+(Marking Instructions in Red)</p>
+<p class="red">Total 46 marks</p>
+<p class="red">Problem 1 (6 marks)</p>
+<p class="red">Problem 2 (6 marks)</p>
+<p class="red">Problem 3 (6 marks)</p>
+<p class="red">Problems 4 (22 marks) [4.1 -2 marks, 4.2 -2 marks, 4.3-4.8 -3 marks each]<br>
+</p>
+<p class="red">Question 5 (6 marks) [2 each from requirement 5.1 - 5.3]</p>
+<hr>
+<p class="red">Revisions:</p>
+<p class="auto-style7">Rev 1 (2018 11 18): fixed script file names for problem 4 queries.</p>
+<hr><br>
+<p class="red"><span class="bold">ASSIGNMENT SUBMISSION FORMAT REQUIREMENTS. ONLY ASSIGMENTS THAT ADHERE TO THE SUBMISSION REQUIREMENTS WILL BE GRADED</span></p>
+<table border="1">
+  <tr>
+    <th width="105">Req Type</th>
+    <th width="678">SUBMISSION REQUIREMENTS</th>
+  </tr>
+  <tr>
+    <td><span class="requirement_danger">ALL</span></td>
+    <td><p class="red">GENERAL<br>
+    </p>
+      <p class="red">Problems that require written answers or diagrams must be submitted as .pdf documents. (DON'T submit .doc word processor or other document formats, .txt, .html, .xml etc. ONLY .pdf)</p>
+      <p class="red">PDF documents  must be well organized and not a collection of isolated files or content. Label what answer goes with what problem for example. (For multiple questions involving PDF's you can put everything in one document, or have a separate document for each question -just label the files clearly.)</p>
+      <p class="red">Diagrams must NOT be scans of hand drawn work. They must be created with an approriate diagraming tool. No hand written or hand drawn work will be accepted.</p>
+      <p><span class="red">.zip is the only compression format accepted. If you compress your entire submission or indivdual parts of it use only .zip format (NOT .rar, or .tar, or .gzip or whatever). Only .zip is accepted. (.zip is the format that culearn  uses to compress your submissions when they are delivered to the TA's for grading.)</span><span class="red"><br>
+      </span></p></td>
+  </tr>
+  <tr>
+    <td><p class="requirement_danger">Problem 1,2,3</p></td>
+    <td><p>&nbsp;</p>
+      <p class="red">Submit .pdf document with the following for each question:<br>
+        1)Functional Dependencies<br>
+        2)Minimal Cover<br>
+        3)Tables schema for a set of tables all in 3rd normal form. Show what functional dependencies apply to each table.</p>
+      <p><br>
+      </p></td>
+  </tr>
+  <tr>
+    <td><p class="requirement_danger">Problem 4</p></td>
+    <td><p>&nbsp;</p>
+      <p class="red">Submit .pdf ER final ER model of your project database.</p>
+      <p class="red">Submit .sql script that will generate your SQLite database.</p>
+      <p class="red">Submit 6 .sql query files named P4_03.sql ... P4_08.sql (one for each problem P4.3-P4.8) that adhere to requirements RM1, RM2, RM3</p>
+      <p><br>
+      </p></td>
+  </tr>
+  <tr>
+    <td><p class="requirement_danger">Problem 5</p></td>
+    <td><p class="red">You must supply ALL the files needed for your javascript project including the database it uses. The code should be organized as the demo code is. DO NOT submit the <span class="code">node_modules</span> directory that results when you install npm modules. In other words, delete that directory before you submit your code.</p>
+      <p class="red">The marking TA will run your code by executing</p>
+      <p class="red"><span class="code">npm install</span> //to install the needed npm modules listed in the <span class="code">package.json</span> file</p>
+      <p class="red"><span class="code">node server.js</span> //to start your server</p>
+      <p class="red">and visit <span class="code">http://localhost:3000/index.html</span> from a chrome browser to access your app (unless you provide a different url in a <span class="code">README.txt</span> file.</p>
+      <p class="red">If your code cannot be installed and launched as above the mark for problem 5 is zero.</p></td>
+  </tr>
+</table>
+<p></p>
+<h2>&nbsp;</h2>
+<h2>Functional Dependencies and your Project Database</h2>
+<p>In this assignment you will get more practice with functional dependencies and present your term project database as an sql script with sql queries and also demonstrate some of it with an node.js/javascript based api application.</p>
+<p><span class="bold">Problems 1,2, and 3</span> are to give you practice designing
+relational
+tables using only functional dependencies and minimal covers to achieve 3NF tables.</p>
+<p>You are encouraged to use the database normalizer app that is posted on the course website to check your answers or help with your experiments. However the questions are intended as practice for the final exam where you need to be able to do this yourself &quot;on paper&quot;.</p>
+<p>For each problem model the problem using only functional dependencies and then ensure that, if necessary, they are nomalized to 3NF. It might well happen that your initial dependencies are already a minimal cover representing 3NF if mapped to tables. It might also happen that you need some normalization.</p>
+<p>Here we are viewing table design as starting with a list of attributes that someone wants to store in a database or a ER model and then using functional dependencies to express relationships and constraints among those attributes. Then a minimal cover of those dependencies is found and that is used to form the 3NF tables. These questions is based primarily on section on functional dependencies in the course notes.</p>
+<p>The &quot;getting started&quot; link in the online database normalizer app describes how E-R models can be mapped to functional dependencies. Here are some more details.</p>
+<p>An entity <u>A,B</u>,C,D,E can be represented by the functional dependency A,B-&gt;C,D,E</p>
+<p>A weak entity <u>A</u>,B,C,D that is a weak entitity of strong entity <u>E</u>,F,G can be represented by the functional dependency <u>A,E</u>-&gt;B,C,D</p>
+<p>There is a little trick to dealing with N:N relationships as a functional dependency. If X and Y are in a N:N and Z is an attribute of the relationship the you can describe it as X,Y-&gt;Z. But if X and Y are in an N:N relationship that has no attributes then you can describe that is X,Y-&gt;temp. Then do the design and at the end just remove the column temp. For example if Projects have many Employees and Employees work on many Projects then you can captures that as a functional dependency: ProjNum, EmpNum -&gt;temp. But if the database also keeps track of the number of hours the employees work on each project then you can captures that as: ProjNum,EmpNum -&gt; Hours.</p>
+<p>The reason this trick is necessary is because algorithms that do normalization are &quot;allowed&quot; to remove trivial dependencies. ProjNum,EmpNum-&gt;ProjNum,EmpNum is trivial because the RHS is a subset of the LHS and will be removed. But if it is removed a table [<u>ProjNum,EmpNum</u>] will never be formed. So do the design with ProjNum,EmpNum -&gt; temp.</p>
+<p>Finally be careful because if several entities have the same attribute name you will have to assign different names in the functional dependencies. When establishing a foreign key relationship to implement a relationship by &quot;adding columns to an existing table&quot; you might have to choose non-confilicting attribute names.</p>
+<p><span class="bold">Problem 4</span> is where you (finally) present your project database as an SQL script and SQL queries.</p>
+<p><span class="bold">Problem 5</span> is an node.js/javascript application that presents the main N:N relationship in your project database.</p>
+<hr>
+<h2>Problem 1 : Movies ER Model</h2>
+<p>Consider a Database that keeps track of  scenes filmed for different movies. A movie uses a screenplay (or story) which  is broken down into scenes. The movie will also have <u>the same</u> scenes  because it is a movie of that screenplay. Not all screenplays in the database become  movies, but every movie is of a particular screenplay. <br>
+Also, a screenplay is used for only one movie. That is, there are not two  different movies made of the same screenplay. Scenes have a story-location  where the story takes place and a filming-location where the filming will  actually be done. Each scene has some actors that appear in that scene. Actors  have a name, phone number, address and agent that represents them. A scene can  be filmed more than once (maybe the actor forgot their lines). Each filming of  a scene is called a &ldquo;Take&rdquo;. The movie is typically created by using the best  take of each scene and putting them together. Below is an E-R diagram that  captures these requirements. </p>
+<p>&nbsp;</p>
+<p>Using the proposed E-R diagram provided,  answer the questions related to designing the tables. (Note: thick lines denote <strong>weak</strong> entities or <strong>mandatory participation</strong> in  relationships.)</p>
+<p><strong>Also in your functional depdencies use TakeNo and SceneNo instead of Take# and Scene# (i.e. avoid the # character).<span style="color:red; "> </span></strong></p>
+<p><img src="images/problem1A.png" width="850" height="520" alt="p1"></p>
+<p >&nbsp;</p>
+<p><span class="requirement">R1.1</span> <font color="#FF0000">[2 marks] </font>Provide a set of Functional dependencies that 
+  completely captures all the features in the situation depicted by the ER diagram.</p>
+<p><font color="#FF0000">2 marks if the answer is correct and complete (e.g. functional dependencies completely capture what is represented in the ER model), 1 mark if it's incomplete, 0 marks if its wrong.</font></p>
+<p><span class="requirement">R1.2</span> <font color="#FF0000">[2 marks] </font>Provide a minimal cover for the set of functional 
+  dependencies.</p>
+<p><span class="requirement">R1.3</span> <font color="#FF0000">[2 marks] </font>Based on your minimal cover find a dependency preserving, 3rd normal 
+  form set of tables use for your database that captures all of the data intended by the E-R model. Show for each table in the decomposition, its key and the 
+functional dependencies that apply to it (that is, map to it).&nbsp;</p>
+<hr>
+<h2>Problem 2 : Movies ER Model</h2>
+<p>In assignment 2 you provided a script to populate a table of fake book songs. It was intended to provide an indexing database for music students. Here is a modified scenario and possible ER model.</p>
+<p>Musicians use fake book charts to play and improvise from. We want to create a database that will use the indexing information provided in assignment 1 an support the following. </p>
+<p>The users (musicians) will upload their own copies of .pdf books to the application. The books supported by the database will be those referred to by  the BOOKCODES entity. When a musician has uploaded a book file they will have the right to be shown pages of from their copy of the book using the indexing data in the database. The musicians will only be allowed to see the page of books they have uploaded, but they can search all of the indexing data. For copyright reasons they will not be allowed to see contents from other books.</p>
+<p>The indexing information should provide the books and page numbers for the various songs. Book files (.pdf) uploaded by users book file should also have some kind of offset information to account for introductory pages in the uploaded book file. That is, if the song is indexed to be on page 1 but that is the 10th page of a particluar .pdf book file then an offset should be stored in the database to account for this. The database should store information about the books including their book code (unique), title, publisher, and date of publication.</p>
+<p>The database should support a collection of users. Users have a name, email address, userid, password. The database must keep track of which books which users are allowed to access.<span lang="EN-US"><font size="4">&nbsp;</font></span></p>
+<p>Here is a  proposed E-R diagram provided for the 
+  situation described above.</p>
+<p> <img src="images/problem1B.png"  alt="p2"><br>
+</p>
+<p><span class="requirement">R2.1</span> <font color="#FF0000">[2 marks] </font>Provide a set of Functional dependencies that 
+  completely captures all the features in the situation depicted in the ER diagram.</p>
+<p><span class="requirement">R2.2</span> <font color="#FF0000">[2 marks] </font>Provide a minimal cover for the set of functional 
+  dependencies.</p>
+<p><span class="requirement">R2.3</span> <font color="#FF0000">[2 marks] </font>Based on your minimal cover find a dependency preserving, 3rd normal form 
+  set of tables use for your database that captures all of the data intended by the E-R model. Show for each table in the decomposition, its key and the 
+  dependencies that apply to it (that is, map to it).&nbsp;</p>
+<hr>
+<h2>Problem 3 : Attribute Based Design</h2>
+<p>For this problem we want to design database tables for the following proposed set of attributes. The design is to be done entirely using functional dependcies. That is, capture all constraints in the form of a dependency that will eventually result in appropriate tables. You are encouraged to use the Database Normalizer app provided on the course website to validate your design.</p>
+<p>Consider the following attributes to be stored in a relational database.</p>
+<table width="577" height="28">
+	<tr>
+		<th width="196">attribute</th>
+		<th width="369">comment</th>
+	</tr>
+  <tr>
+		<td width="196">stdnum</td>
+	<td width="369">student number</td>
+  </tr>
+  <tr>
+		<td width="196">email</td>
+	<td width="369">student email address</td>
+  </tr>
+  <tr>
+		<td width="196">name</td>
+	<td width="369">student name</td>
+  </tr>
+  <tr>
+		<td width="196">city</td>
+	<td width="369">student address city</td>
+  </tr>
+  <tr>
+		<td width="196">strnum</td>
+	<td width="369">student address street number</td>
+  </tr>
+  <tr>
+		<td width="196">street</td>
+	<td width="369">student address street</td>
+  </tr>
+  <tr>
+		<td width="196">postcode</td>
+	<td width="369">student address postal code</td>
+  </tr>
+  <tr>
+		<td width="196">area_code</td>
+	<td width="369">student phone number area code</td>
+  </tr>
+  <tr>
+		<td width="196">office_code</td>
+	<td width="369">student phone number office code</td>
+  </tr>
+  <tr>
+		<td width="196">station_code</td>
+	<td width="369">student phone number station code</td>
+  </tr>
+  <tr>
+		<td width="196">course_num</td>
+	<td width="369">course number e.g. COMP3005</td>
+  </tr>
+  <tr>
+		<td width="196">course_name</td>
+	<td width="369">course name e.g. Fundamentals of Databases</td>
+  </tr>
+  <tr>
+		<td width="196">course_section</td>
+	<td width="369">student section e.g. F2018-A</td>
+  </tr>
+	<tr>
+		<td width="196">department_name</td>
+		<td width="369">name of department offering course</td>
+	</tr>
+  <tr>
+		<td width="196">room_num</td>
+	<td width="369">location of a course e.g. MC2000</td>
+  </tr>
+  <tr>
+		<td width="196">building</td>
+	<td width="369">building name e.g. Minto Centre</td>
+  </tr>
+  <tr>
+		<td width="196">period</td>
+	<td width="369">time table period e.g. Tue,Thu 10:00-11:30</td>
+  </tr>
+  <tr>
+		<td width="196">term</td>
+	<td width="369">term e.g. fall2018</td>
+  </tr>
+  <tr>
+		<td width="196">grade</td>
+		<td width="369">grade student received in a course</td>
+  </tr>
+
+
+</table>
+
+<p>Here are the known constraints:</p>
+<p>1) Students can have only one name, address, phone number and email address
+  in the database.<br>
+  2) Either a student's student number or email address uniquely identify the student. <br>
+  2) A phone number area code and office code is associated 
+  with a particular city. That is, the city is a unique fact about the phone 
+  number.<br>
+  3) A postal code uniquely identifies a city. That is, knowing just 
+  someone's postal code uniquely determines the city part of their address.<br>
+  4) A course number does not identify a term, time or offering of the course, but a course section identifies a course offering including the year, term, and section letter. A course number identifies the department offering the course.<br>
+  5) The combination of period, room, and term  identifies a course section. The database should provide a way to see this scheduling information.<br>
+  6) The room number identifies 
+  which building the room is in. That is, building is a unique fact about the the 
+  room number.<br>
+  7) Students are enrolled in many courses sections and course sections have many 
+  students enrolled in them. The database needs to keep track of this enrollment information.<br>
+  8) The combination of student number and course 
+  number uniquely idenfities a grade the student received in some offering (section) of the course. Student's grades are reported for the course number. For example: a student enrolls in COMP3005W2015-B but on their transcript it just shows that they got a grade of B+ in COMP3005.</p>
+<p><span class="requirement">R3.1</span> <span class="red">[2 marks] </span>Write down 
+  the functional dependencies that would capture all the requirements of the database. You may add more constraints or assumptions if needed but if so write them down with the functional depedencies. <br class="auto-style1">
+  <br>
+  <span class="requirement">R3.2</span> <font color="#FF0000">[2 marks] </font>Provide a minimal cover for the set of functional 
+dependencies.</p>
+<p><span class="requirement">R3.3</span> <font color="#FF0000">[2 marks] </font>Based on your minimal cover find a dependency preserving, 3rd normal 
+  set of tables use for your database that captures all of the data intended by the E-R model.Show for each table in the decomposition, its key and the 
+  dependencies that apply to it (that is, map to it).&nbsp;</p>
+<p class="MsoNormal"></p>
+<hr>
+<h2>Problem 4: Your Project Database in SQL</h2>
+<p>Throughout the course you have been designing a project database on your own. In this question we want you to present it as an .sql script to create the database and then run some meaningful sql queries against it. </p>
+<p><span class="requirement">R4.1</span> <span class="red">[2 marks] </span>Provide a final ER model of your database that shows us exactly what you implemented</p>
+<p><span class="requirement">R4.2</span> <span class="red">[2 marks]</span> Provide an .sql script file that will build your database. The marker will first build your database by launching <span class="code">sqlite3</span> in a command console and the executing <span class="code">.read database.sql</span>. <span class="red">(If your database script won't run then the mark for the remainder of this question is 0.)</span></p>
+<p>Provide six sql queries that you feel best illustrates the intended use of your project database. For each query provide the following.</p>
+<p><span class="requirement"><span class="requirement_danger">RM 1</span></span> <span class="red">[1 mark]</span> An 
+  english description of what the query 
+is supposed to find. Include it as a comment in your query script so the TA can see it when they are running your script)  Also include in your comment why this query is relevant, or important, to the database you have chosen to build. </p>
+<p><span class="requirement"><span class="requirement_danger">RM 2</span></span> <span class="red">[1 mark]</span> Your SQL query code</p>
+<p><span class="requirement"><span class="requirement_danger">RM 3</span></span> <span class="red">[1 mark]</span> The anwer table you obtained put as a comment at the bottom of the sql script so we can compare it to answer we get when we run the script. </p>
+<p><span class="red">Submission: submit 6 individual sql scripts called (REV 1:) </span><span class="code">P4_03.sql - P4_08.sql</span>.</p>
+<p>When your script for a problem is run it would look something like the following to the marker (needs <span class="code">.echo ON</span> when running in sqlite3 command interface).</p>
+<p><img src="images/p4-1.png" width="878" height="803" alt=""/></p>
+<p>&nbsp;</p>
+
+<p>Your choice of queries should be distinct and relevant. Don't just provide 6 minor variations of the same thing. <span class="red">You will not get marks for queries that are just minor variations of another query.</span></p>
+<p><span class="requirement">Problem 4.3</span> Your query.</p>
+<p><span class="requirement">Problem 4.4</span> Your query.</p>
+<p><span class="requirement">Problem 4.5</span> Your query.</p>
+<p><span class="requirement">Problem 4.6</span> Your query.</p>
+<p><span class="requirement">Problem 4.7</span> Your query.</p>
+<p><span class="requirement">Problem 4.8</span> Your query.</p>
+<p>&nbsp;</p>
+<hr>
+<h2>&nbsp;</h2>
+<h2>Problem 5: API-based Client App showning N:N Relationship</h2>
+<p>
+<font size="+1">One of the most important relationship types that needs to be presented to users is the N:N relationship on an E-R model. As an example in the fake book database there is an N:N relationship between books and songs. A book contains many songs and a song appears in many books. This is depicted in the following E-R model structure.</font></p>
+<p><img src="images/p5-1.png"  alt=""/></p>
+
+<p>Note this scenario is for an application where only one pdf file of a book exists so that things like filename and page_offset can be part of the properties of a book.</p>
+<p>This structure has been implemented with the following two tables. Notice that in implementation the songs entitiy is actually represented within the N:N table (which is called songs) because the songs entitiy is all key and fully absorbed, or represented within, the N:N table. This is pretty typical in database design. Also in implementing the N:N table a convenience id key has been added which is not in the E-R model (again pretty typical).</p>
+<p>&nbsp;</p>
+<pre>
+CREATE TABLE bookcodes (
+bookcode text primary key not null,
+title text not null,
+format text,
+filename text,
+page_offset integer,
+num_pages integer default 0
+);
+
+
+CREATE TABLE songs (
+id integer primary key not null,
+title text not null, --title of song
+composer text, --composer(s) of song
+bookcode text, --book song is from
+page integer, --page number of song in book
+length integer, --length of song in pages
+studentnum text --contributor of data
+);
+</pre>
+<p><font size="+1">It happens  often in data-based apps that a user wants to select items in an N:N relationship table and then filter them by one of the participating entities in the relationship. For example the user wants to find songs that appear in all the books but then filter that to show only the songs coming from a particular book. Or the user wants to search all the books for songs written by a particular composer and then filter that to show only their songs in a particular book.</font></p>
+<p><font size="+1">We have implemented a node.js/javascript application, as demo code, that shows this. </font>To run the demo code you need to first install the required npm modules by executing:</p>
+<p class="code">npm install</p>
+<p>then you run the server by executing:</p>
+<p class="code">node server.js </p>
+<p>and then access the app from a browser by visiting:</p>
+<p class="code">http://localhost:3000/index.html</p>
+<p><font size="+1">In the app the user can search for songs based on a keyword that is matched with the song's title or  composer. The database is searched  across all books. When the results are presented to the user is shows two lists: the songs and the books from which those songs came. If the user selects a song the songs details are shown. But if they select a book then songs contained in just that book are shown.  This way the user can filter the search results to a particular book from among the intial results shown for all books. This is a very common data display scenario.</font></p>
+<p>Here is a short screen capture video showing how the demo code works. In this video the user searches for songs participating in the N:N relationship and then filters the search by selecting one of the books that was among the  search results. Later in the video the user searches by composer (Jobim) and then filters by book to see all the songs in that book by the composer. When the user selects a particular book from among the search results all the songs by that composer in that book are shown.</p>
+<p>By the way, when songs are searched in the N:N relationship only a limited number of results are returned by the server because there could be thousands. However when a book is selected to filter by the query is re-sent to that server and all the results for that book are included because there would only be a few hundred at most. This way if you blank out the search keyword when you filter by a book you can see all the songs in that book (ordered by page number).</p>
+<video  controls>
+  <source src="images/NtoN Demo.mp4" type="video/mp4">
+Your browser does not support the video tag. </video>
+<p>&nbsp;</p>
+<p><font size="+1">For this problem we want you to modify the demo code, or write your own from scratch, to do the same for the most important N:N relationship in your project database. That is, pick something you want the user to be able to search for in a table that implements an N:N relationship (e.g. songs that appear in books) and then allow them to filter the search by one of the entities that participate in the N:N relationship (e.g. books).</font></p>
+<p>&nbsp;</p>
+<p><span class="requirement">R5.1</span> The user should be able use a keyword based search for items (rows) in one of your N:N relationships in your database.</p>
+<p><span class="requirement">R5.2</span> The results should be shown to the user in two lists: one representing the found rows in the N:N relationship table (e.g. songs from books) and the other items from one of the participating entities that can be used to filter the search (e.g. books where the songs came from).</p>
+<p><span class="requirement">R5.3</span> The user should be able to filter the search by selecting one of the items in the participating entity list (e.g. book) and see only the search items (e.g. songs) that came from that item (e.g. book).</p>
+<p><font size="+1"><br>
+</font></p>
+<p><font size="+1" class="red">Code Submission and Marking:</font></p>
+<p class="red">see submission requirements in the table at the start of the assignment.</p>
+<hr>
+</body>
+</html>
